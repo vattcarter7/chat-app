@@ -25,7 +25,9 @@ const AuthService = {
       });
   },
 
-  logout: () => {}
+  logout: () => {
+    API.defaults.headers['Authorization'] = '';
+  }
 };
 
 export default AuthService;
