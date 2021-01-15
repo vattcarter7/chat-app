@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const secret = require('crypto').randomBytes(64).toString('hex');
+    // const secret = require('crypto').randomBytes(64).toString('hex');
     // find the user
     const user = await User.findOne({
       where: {
@@ -24,7 +24,7 @@ exports.login = async (req, res) => {
 
     // generate auth token
     const userWithToken = generateToken(user.get({ raw: true }));
-    userWithToken.avatar = user.avatar;
+    userWithToken.user.avatar = user.avatar;
     return res.send(userWithToken);
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -36,7 +36,7 @@ exports.register = async (req, res) => {
 
     // generate auth token
     const userWithToken = generateToken(user.get({ raw: true }));
-    userWithToken.avatar = user.avatar;
+    userWithToken.user.avatar = user.avatar;
     return res.send(userWithToken);
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -48,5 +48,5 @@ const generateToken = (user) => {
 
   const token = jwt.sign(user, config.appKey, { expiresIn: 86400 });
 
-  return { ...user, ...{ token } };
+  return { ...{ user }, ...{ token } };
 };
