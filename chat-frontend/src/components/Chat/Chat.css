@@ -12,7 +12,7 @@
 }
 #chat-container #chat-wrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
   overflow: hidden;
   padding: 2rem 1rem;
